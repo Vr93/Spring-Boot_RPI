@@ -40,10 +40,17 @@
             <version>3.15</version>
         </dependency>
         <dependency>
-            <groupId>com.github.albfernandez</groupId>
-            <artifactId>javadbf</artifactId>
-            <version>1.9.2</version>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-core</artifactId>
+            <version>1.2-SNAPSHOT</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -56,6 +63,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.0.1.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

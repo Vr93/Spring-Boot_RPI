@@ -1,8 +1,6 @@
 package Controllers;
 
-import Citect.DBF.VariableDBF;
-import Citect.Excel.ExcelReader;
-import Citect.Handlers.ObjectTagGenerator;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -60,15 +58,6 @@ public class CitectController {
         fos.close();
 
 
-        File variableFile = new File("Variable.dbf");
-        File advalmDBF = new File("Advalm.dbf");
-        File trendDBF = new File("Trend.dbf");
-        System.out.println("file has size: " + file.getSize());
-        ExcelReader excelReader = new ExcelReader();
-        excelReader.readExcel(inputFile);
-
-
-       excelReader.getObjectHandler().generateAllCitectTags(variableFile,advalmDBF,trendDBF);
 
 
 
@@ -76,14 +65,14 @@ public class CitectController {
 
 
         //File citectFile = new ClassPathResource("Trend.dbf").getFile();
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(variableFile));
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(inputFile));
         return ResponseEntity.ok()
                 // Content-Disposition
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + variableFile.getName())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + inputFile.getName())
                 // Content-Type
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 // Contet-Length
-                .contentLength(variableFile.length()) //
+                .contentLength(inputFile.length()) //
                 .body(resource);
     }
 }
