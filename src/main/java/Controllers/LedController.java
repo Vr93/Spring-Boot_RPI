@@ -1,49 +1,38 @@
 package Controllers;
 
-import GPIO.GPIO_Handler;
-import org.json.JSONObject;
+import Model.Digital_Output_1;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
 
 @Controller
 public class LedController {
-
-    private GPIO_Handler gpio_handler;
-
     @Autowired
-    public LedController(GPIO_Handler gpio_handler)
-    {
-        this.gpio_handler = gpio_handler;
+    private Digital_Output_1 digital_output_1;
+
+    @RequestMapping(value="/digital_output_1_state", method= RequestMethod.GET)
+    public String getDigitalOutput1State(ModelMap map) {
+        // TODO: retrieve the new value here so you can add it to model map
+        map.addAttribute("digital_output_1_state",digital_output_1.getState());
+
+        // change "myview" to the name of your view
+        return "index :: #digital_output_1_state";
     }
 
-    @GetMapping(path = "/testJson", produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> testJson()
-    {
-
-            JSONObject entity = new JSONObject();
-            entity.put("aa", "bb");
-
-
-        return new ResponseEntity<Object>(entity, HttpStatus.OK);
+    @RequestMapping(value = "/digital_output_1_value", method = RequestMethod.POST)
+    public void uploadingPost(@RequestParam("digital_output_1_value") String inputValue) throws IOException {
+        int pinState = Integer.parseInt(inputValue);
+        if(pinState == 0){
+            digital_output_1.setPinLow();
+        }
+        else if(pinState == 1){
+            digital_output_1.setPinHIGH();
+        }
     }
 
-    @RequestMapping(value = "/LEDON", method = RequestMethod.POST)
-    public void LEDON()
-    {
-       gpio_handler.setPinHIGH();
-        System.out.println("Pin is HIGH");
-    }
-
-    @RequestMapping(value = "/LEDOFF", method = RequestMethod.POST)
-    public void LEDOFF()
-    {
-        gpio_handler.setPinLow();
-        System.out.println("Pin is LOW");
-    }
 }
