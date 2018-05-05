@@ -16,6 +16,7 @@ public class LedController {
     private Digital_Output_1 digital_output_1;
 
 
+
    /* @RequestMapping(value="/digital_output_1_state", method= RequestMethod.GET)
     public String getDigitalOutput1State(ModelMap map) {
         // TODO: retrieve the new value here so you can add it to model map

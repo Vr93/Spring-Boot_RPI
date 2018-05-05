@@ -61,14 +61,23 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12 text-center">
           <div id="ledstate">
-
           </div>
         </div>
       </div>
     </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div id="smokedetector">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LED Pin 2, POST, Turn on LED -->
   <script>
   $( document ).ready(function() {
       $('#ledon').click(function(){
@@ -96,6 +105,7 @@
     })
   </script>
 
+    <!-- LED Pin 2, POST, Turn off LED -->
     <script>
   $( document ).ready(function() {
       $('#ledoff').click(function(){
@@ -123,11 +133,12 @@
     })
   </script>
 
+    <!-- LED Pin 2, GET, get state of LED pin -->
   <script>
     $( document ).ready(function() {
-    window.setInterval(getState, 1000);
+    window.setInterval(getLEDState, 1000);
       // DO GET
-	function getState(){
+	function getLEDState(){
 		$.ajax({
 			type : "GET",
 			url : window.location + "state",
@@ -137,6 +148,28 @@
 			},
 			error : function(e) {
 				$("#ledstate").html("<strong>Error</strong>");
+				console.log("ERROR: ", e);
+			}
+		});
+		}
+    })
+  </script>
+
+    <!-- Smoke detector, get analog value -->
+    <script>
+    $( document ).ready(function() {
+    window.setInterval(getSmokeDetectorValue, 1000);
+      // DO GET
+	function getSmokeDetectorValue(){
+		$.ajax({
+			type : "GET",
+			url : window.location + "smokedetectorvalue",
+			success: function(result){
+					$("#smokedetector").empty();
+					$("#smokedetector").html(result);
+			},
+			error : function(e) {
+				$("#smokedetector").html("<strong>Error</strong>");
 				console.log("ERROR: ", e);
 			}
 		});
