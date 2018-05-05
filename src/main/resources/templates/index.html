@@ -50,55 +50,102 @@
       </div>
     </nav>
 
-
-
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 my-5 border border-primary">
-          <a type="button" class="btn btn-default" th:href="@{/LEDON}">LEDON</a>
-          <a type="button" class="btn btn-default" th:href="@{/LEDOFF}">LEDOFF</a>
-        </div>
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <button id = "ledon" type="button" class="btn btn-primary">LED ON</button>
+        <button id ="ledoff" type="button" class="btn btn-primary">LED OFF</button>
       </div>
     </div>
-
-
-    <div class="container my-5">
-      <div class="row">
-        <div class="col-lg-12">
-          <form method="POST" action="/asd">
-            <div class="row">
-              <div class="col">
-                <input name="digital_output_1_value" type="text" class="form-control" placeholder="First name">
-              </div>
-              <div class="col">
-                <button type="submit" class="btn btn-primary">Value</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+  </div>
 
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h2>
-            <span id="digital_output_1_state" th:text="'Value: ' + ${digital_output_1_state}"></span>
-          </h2>
+          <div id="ledstate">
+
+          </div>
         </div>
       </div>
     </div>
+
+  <script>
+  $( document ).ready(function() {
+      $('#ledon').click(function(){
+		ledOnPost();
+	  });
+        function ledOnPost(){
+            // DO POST
+            $.ajax({
+                type : "POST",
+                contentType : "application/json",
+                accept: 'text/plain',
+                url : window.location + "changeState",
+                data : "on",
+                dataType: 'text',
+                success : function(result) {
+                    console.log("LEDON FORM SUCCESS");
+                    console.log(result);
+                },
+                error : function(e) {
+                    alert("Error!")
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
+    })
+  </script>
 
     <script>
+  $( document ).ready(function() {
+      $('#ledoff').click(function(){
+		ledOffPost();
+	  });
+        function ledOffPost(){
+            // DO POST
+            $.ajax({
+                type : "POST",
+                contentType : "application/json",
+                accept: 'text/plain',
+                url : window.location + "changeState",
+                data : "off",
+                dataType: 'text',
+                success : function(result) {
+                    console.log("LEDON FORM SUCCESS");
+                    console.log(result);
+                },
+                error : function(e) {
+                    alert("Error!")
+                    console.log("ERROR: ", e);
+                }
+            });
+        }
+    })
+  </script>
 
-      function updateEventCount() {
-    $.get("digital_output_1_state", function(fragment) { // get from controller
-        $("#digital_output_1_state").replaceWith(fragment); // update snippet of page
-    });
-    }
+  <script>
+    $( document ).ready(function() {
+    window.setInterval(getState, 1000);
+      // DO GET
+	function getState(){
+		$.ajax({
+			type : "GET",
+			url : window.location + "state",
+			success: function(result){
+					$("#ledstate").empty();
+					$("#ledstate").html(result);
+			},
+			error : function(e) {
+				$("#ledstate").html("<strong>Error</strong>");
+				console.log("ERROR: ", e);
+			}
+		});
+		}
+    })
+  </script>
 
-    window.setInterval(updateEventCount, 1000);
-    </script>
+
+
 
 
 

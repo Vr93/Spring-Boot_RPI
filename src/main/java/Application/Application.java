@@ -2,12 +2,13 @@ package Application;
 
 
 import Controllers.GreetingController;
+import Controllers.LedController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication()
-@ComponentScan(basePackageClasses = GreetingController.class)
+@SpringBootApplication(scanBasePackages={
+        "Application", "Controllers","Model"})
 public class Application {
 
     /**

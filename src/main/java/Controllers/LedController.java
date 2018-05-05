@@ -4,18 +4,19 @@ import Model.Digital_Output_1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.io.IOException;
 
-@Controller
+@RestController
 public class LedController {
+
     @Autowired
     private Digital_Output_1 digital_output_1;
 
-    @RequestMapping(value="/digital_output_1_state", method= RequestMethod.GET)
+
+   /* @RequestMapping(value="/digital_output_1_state", method= RequestMethod.GET)
     public String getDigitalOutput1State(ModelMap map) {
         // TODO: retrieve the new value here so you can add it to model map
         map.addAttribute("digital_output_1_state",digital_output_1.getState());
@@ -33,6 +34,25 @@ public class LedController {
         else if(pinState == 1){
             digital_output_1.setPinHIGH();
         }
+    }*/
+
+    @GetMapping(value = "/state")
+    public String getState(){
+        return String.valueOf(digital_output_1.getState());
+    }
+
+    @PostMapping(value="/changeState")
+    public String postLedValue(@RequestBody String input){
+        String status = "";
+        if(input.equalsIgnoreCase("on")){
+            digital_output_1.setPinHIGH();
+            status = "high";
+        }
+        else if(input.equalsIgnoreCase("off")){
+            digital_output_1.setPinLow();
+            status = "low";
+        }
+        return status;
     }
 
 }

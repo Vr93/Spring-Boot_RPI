@@ -23,11 +23,30 @@ public class Digital_Output_1 {
         /* Initialize the GPIO on the Raspberry pi. */
         this.gpio = GpioFactory.getInstance();
         /* User can select which IO pin to use. */
-        Pin pinNumberPin = getSelectedPin(1);
+        Pin pinNumberPin = getSelectedPin(2);
         /* Set pin number and pin state to LOW on startup. */
         this.pin = gpio.provisionDigitalOutputPin(pinNumberPin, PinState.LOW);
         /* Set shutdown options for the pin. */
         this.pin.setShutdownOptions(true, PinState.LOW);
+        test();
+    }
+
+
+    private void test(){
+        Thread t = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        Thread.sleep(3000);
+                        System.out.println("State -> " + getState());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t.start();
     }
     /**
      * Set the pin state HIGH. 
