@@ -71,11 +71,13 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div id="smokedetector">
+          <div id="pcf8591_values" class="text-center">
           </div>
         </div>
       </div>
     </div>
+
+
 
     <!-- LED Pin 2, POST, Turn on LED -->
   <script>
@@ -155,27 +157,33 @@
     })
   </script>
 
-    <!-- Smoke detector, get analog value -->
+    <!-- PCF8591, get analog values -->
     <script>
     $( document ).ready(function() {
-    window.setInterval(getSmokeDetectorValue, 1000);
+    window.setInterval(getPCF8591_values, 1000);
       // DO GET
-	function getSmokeDetectorValue(){
+	function getPCF8591_values(){
 		$.ajax({
 			type : "GET",
-			url : window.location + "smokedetectorvalue",
+			url : window.location + "pcf8591_values",
 			success: function(result){
-					$("#smokedetector").empty();
-					$("#smokedetector").html(result);
+					$("#pcf8591_values").empty();
+					$("#pcf8591_values").html(result);
 			},
 			error : function(e) {
-				$("#smokedetector").html("<strong>Error</strong>");
+				$("#pcf8591_value0").html("<strong>Error</strong>");
 				console.log("ERROR: ", e);
 			}
 		});
 		}
     })
   </script>
+
+
+
+
+
+
 
 
 

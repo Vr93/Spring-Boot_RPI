@@ -39,7 +39,7 @@ public class Digital_Output_1 {
                 while(true){
                     try {
                         Thread.sleep(3000);
-                        System.out.println("State -> " + getState());
+                       // System.out.println("State -> " + getState());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
