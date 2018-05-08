@@ -19,10 +19,10 @@ public class PCF8591_Controller {
     public String getPCF8591_values(){
         int values[] = pcf8591.getAnalogValues();
         JSONObject obj = new JSONObject();
-        obj.put("analog value 0:",values[0]);
-        obj.put("analog value 1:",values[1]);
-        obj.put("analog value 2:",values[2]);
-        obj.put("analog value 3:",values[3]);
+        obj.put("value0",values[0]);
+        obj.put("value1",values[1]);
+        obj.put("value2",values[2]);
+        obj.put("value3",values[3]);
         return obj.toString();
     }
 

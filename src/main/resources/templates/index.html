@@ -70,9 +70,11 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
-          <div id="pcf8591_values" class="text-center">
-          </div>
+        <div class="col-lg-4 offset-lg-4">
+         <div style="background-color:#008000;opacity: 0.5;"> <div id="pcf8591_value0"></div></div>
+          <div style="background-color:#008000;opacity: 0.5;"><div id="pcf8591_value1"></div></div>
+            <div style="background-color:#008000;opacity: 0.5;"><div id="pcf8591_value2"></div></div>
+              <div style="background-color:#008000;opacity: 0.5;"><div id="pcf8591_value3"></div></div>
         </div>
       </div>
     </div>
@@ -167,8 +169,16 @@
 			type : "GET",
 			url : window.location + "pcf8591_values",
 			success: function(result){
-					$("#pcf8591_values").empty();
-					$("#pcf8591_values").html(result);
+			var jsonData = JSON.parse(result);
+			console.log(jsonData);
+					$("#pcf8591_value0").empty();
+					$("#pcf8591_value0").html("<h3> Analog Value 0: " + jsonData.value0 + "</h3>");
+					$("#pcf8591_value1").empty();
+					$("#pcf8591_value1").html("<h3> Analog Value 1: " + jsonData.value1 + "</h3>");
+					$("#pcf8591_value2").empty();
+					$("#pcf8591_value2").html("<h3> Analog Value 2: " + jsonData.value2 + "</h3>");
+					$("#pcf8591_value3").empty();
+					$("#pcf8591_value3").html("<h3> Analog Value 3: " + jsonData.value3 + "</h3>");
 			},
 			error : function(e) {
 				$("#pcf8591_value0").html("<strong>Error</strong>");
