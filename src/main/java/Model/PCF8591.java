@@ -24,10 +24,12 @@ public class PCF8591 {
     private static final int PCF8591 = 0x48; // address pin not connected (FLOATING)
     private I2CBus i2c;
     private I2CDevice device;
-    private int analogValues[];
+    private int analogValues[]; // Array of analog inputs (A0, A1, A2, A3).
+    private int analogOutValue; // Value of the analog out pin. (AOUT).
 
     public PCF8591(){
         this.analogValues = new int[4];
+        this.analogOutValue = 0;
 
         try {
             i2c = I2CFactory.getInstance(I2CBus.BUS_1);
@@ -84,12 +86,22 @@ public class PCF8591 {
         return analogValues;
     }
 
+    public void setAnalogValue(int value){
+        try {
+            device.write((byte) 0x40, (byte) value);
+            setAnalogOutValue(value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public int getAnalogOutValue() {
+        return analogOutValue;
+    }
 
-
-
-
-
+    private void setAnalogOutValue(int analogOutValue) {
+        this.analogOutValue = analogOutValue;
+    }
 
     /*public int getAnalogValue0(){
         List<Integer> validAddresses = new ArrayList<Integer>();
