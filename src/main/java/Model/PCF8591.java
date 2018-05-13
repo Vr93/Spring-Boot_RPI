@@ -27,9 +27,11 @@ public class PCF8591 {
     private int analogValues[]; // Array of analog inputs (A0, A1, A2, A3).
     private int analogOutValue; // Value of the analog out pin. (AOUT).
 
+    private boolean I2C_DEV_READ;
+
     public PCF8591(){
         this.analogValues = new int[4];
-        this.analogOutValue = 0;
+        //this.analogOutValue = 0;
 
         try {
             i2c = I2CFactory.getInstance(I2CBus.BUS_1);
@@ -48,18 +50,9 @@ public class PCF8591 {
             public void run() {
                 while(true) {
                     try {
-                        int outValue = 0;
                         Thread.sleep(5000);
-                        for (int i = 0; i <= 3; i++) {
-                            device.read((byte) (0x40 | (i & 3)));
-                            analogValues[i] = device.read((byte) (0x40 | (i & 3)));
-                            analogValues[i] = device.read();
-                            System.out.println("Value " + i + "   ->   " + analogValues[i]);
-                        }
-                        //dev.write((byte) 0x40, (byte) outValue);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+
+                    }  catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
@@ -74,11 +67,10 @@ public class PCF8591 {
 
     public int[] getAnalogValues(){
         try {
-            for (int i = 0; i <= 3; i++) {
-                device.read((byte) (0x40 | (i & 3)));
-                analogValues[i] = device.read((byte) (0x40 | (i & 3)));
-                analogValues[i] = device.read();
-                //System.out.println("Value " + i + "   ->   " + analogValues[i]);
+                for (int i = 0; i <= 3; i++) {
+                    device.read((byte) (0x40 | (i & 3)));
+                    analogValues[i] = device.read((byte) (0x40 | (i & 3)));
+                    analogValues[i] = device.read();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,10 +78,10 @@ public class PCF8591 {
         return analogValues;
     }
 
-    public void setAnalogValue(int value){
+    /*public void setAnalogValue(int value){
         try {
             device.write((byte) 0x40, (byte) value);
-            setAnalogOutValue(value);
+            setAnalogOutValueChange(value);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,9 +91,9 @@ public class PCF8591 {
         return analogOutValue;
     }
 
-    private void setAnalogOutValue(int analogOutValue) {
+    private void setAnalogOutValueChange(int analogOutValue) {
         this.analogOutValue = analogOutValue;
-    }
+    }*/
 
     /*public int getAnalogValue0(){
         List<Integer> validAddresses = new ArrayList<Integer>();
